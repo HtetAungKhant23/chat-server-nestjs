@@ -6,6 +6,10 @@ import { Message } from './entities/message.entity';
 export class MessagesService {
   messages: Message[] = [{ name: 'Htet', text: 'Hay brother' }];
 
+  identify(name: string, client: string) {
+    
+  }
+
   create(createMessageDto: CreateMessageDto) {
     const message = { ...createMessageDto };
     this.messages.push(message);
