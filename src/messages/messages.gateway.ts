@@ -5,7 +5,6 @@ import {
 } from '@nestjs/websockets';
 import { MessagesService } from './messages.service';
 import { CreateMessageDto } from './dto/create-message.dto';
-import { UpdateMessageDto } from './dto/update-message.dto';
 
 @WebSocketGateway({
   cors: {
@@ -25,18 +24,9 @@ export class MessagesGateway {
     return this.messagesService.findAll();
   }
 
-  @SubscribeMessage('findOneMessage')
-  findOne(@MessageBody() id: number) {
-    return this.messagesService.findOne(id);
-  }
+  @SubscribeMessage('join')
+  joinRoom() {}
 
-  @SubscribeMessage('updateMessage')
-  update(@MessageBody() updateMessageDto: UpdateMessageDto) {
-    return this.messagesService.update(updateMessageDto.id, updateMessageDto);
-  }
-
-  @SubscribeMessage('removeMessage')
-  remove(@MessageBody() id: number) {
-    return this.messagesService.remove(id);
-  }
+  @SubscribeMessage('typing')
+  typing() {}
 }
