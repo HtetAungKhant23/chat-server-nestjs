@@ -38,4 +38,13 @@ export class MessagesGateway {
   join(@MessageBody('name') name: string, @ConnectedSocket() client: Socket) {
     return this.messagesService.identify(name, client.id);
   }
+
+  @SubscribeMessage('typing')
+  async typing(
+    @MessageBody('isTyping') isTyping: boolean,
+    @ConnectedSocket() client: Socket,
+  ) {
+    const name = await this.messagesService.getClientName(client.id);
+    client.broadcast.emit('typing', { name, isTyping });
+  }
 }

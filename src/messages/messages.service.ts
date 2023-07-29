@@ -7,6 +7,10 @@ export class MessagesService {
   messages: Message[] = [{ name: 'Htet', text: 'Hay brother' }];
   clientToUser = {};
 
+  getClientName(clientId: string) {
+    return this.clientToUser[clientId];
+  }
+
   identify(name: string, clientId: string) {
     this.clientToUser[clientId] = name;
 
