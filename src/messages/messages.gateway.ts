@@ -2,9 +2,11 @@ import {
   WebSocketGateway,
   SubscribeMessage,
   MessageBody,
+  WebSocketServer,
 } from '@nestjs/websockets';
 import { MessagesService } from './messages.service';
 import { CreateMessageDto } from './dto/create-message.dto';
+import { Server } from 'socket.io';
 
 @WebSocketGateway({
   cors: {
@@ -12,21 +14,18 @@ import { CreateMessageDto } from './dto/create-message.dto';
   },
 })
 export class MessagesGateway {
+  @WebSocketServer()
+  server: Server;
+
   constructor(private readonly messagesService: MessagesService) {}
 
   @SubscribeMessage('createMessage')
-  create(@MessageBody() createMessageDto: CreateMessageDto) {
-    return this.messagesService.create(createMessageDto);
+  async create(@MessageBody() createMessageDto: CreateMessageDto) {
+    const message = await this.messagesService.create(createMessageDto);
   }
 
   @SubscribeMessage('findAllMessages')
   findAll() {
     return this.messagesService.findAll();
   }
-
-  @SubscribeMessage('join')
-  joinRoom() {}
-
-  @SubscribeMessage('typing')
-  typing() {}
 }
