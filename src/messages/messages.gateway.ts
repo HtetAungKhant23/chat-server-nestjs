@@ -35,7 +35,10 @@ export class MessagesGateway {
   }
 
   @SubscribeMessage('join')
-  join(@MessageBody('name') name: string, @ConnectedSocket() client: Socket) {
+  joinRoom(
+    @MessageBody('name') name: string,
+    @ConnectedSocket() client: Socket,
+  ) {
     return this.messagesService.identify(name, client.id);
   }
 
