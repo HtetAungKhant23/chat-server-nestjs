@@ -37,6 +37,7 @@ export class MessagesGateway {
 
   @SubscribeMessage('findAllMessages')
   findAll() {
+    console.log('please brother plz');
     return this.messagesService.findAll();
   }
 
@@ -45,7 +46,9 @@ export class MessagesGateway {
     @MessageBody('name') name: string,
     @ConnectedSocket() client: Socket,
   ) {
-    return this.messagesService.identify(name, client.id);
+    const user = this.messagesService.identify(name, client.id);
+    console.log(user, 'hrhrhrhr');
+    return user;
   }
 
   @SubscribeMessage('typing')
