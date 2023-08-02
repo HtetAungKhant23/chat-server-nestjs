@@ -4,7 +4,8 @@ import { Message } from './entities/message.entity';
 
 @Injectable()
 export class MessagesService {
-  messages: Message[] = [{ name: 'Htet', text: 'Hay brother' }];
+  messages: Message[] = [{ name: 'Bot', text: `welcome ...` }];
+  // messages: Message[] = [];
   clientToUser = {};
 
   getClientName(clientId: string) {
@@ -13,12 +14,14 @@ export class MessagesService {
 
   identify(name: string, clientId: string) {
     this.clientToUser[clientId] = name;
-
     return Object.values(this.clientToUser);
   }
 
-  create(createMessageDto: CreateMessageDto) {
-    const message = { ...createMessageDto };
+  create(createMessageDto: CreateMessageDto, clientId: string) {
+    const message = {
+      name: this.clientToUser[clientId],
+      text: createMessageDto.text,
+    };
     this.messages.push(message);
     return message;
   }
