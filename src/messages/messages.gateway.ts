@@ -47,7 +47,7 @@ export class MessagesGateway {
     @ConnectedSocket() client: Socket,
   ) {
     const user = this.messagesService.identify(name, client.id);
-    console.log(user, 'hrhrhrhr');
+    // console.log(user, 'hrhrhrhr');
     return user;
   }
 
